@@ -1,9 +1,18 @@
 package com.Bhargav.libraryManagement.model;
 
+import lombok.*;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "author")
 @Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Author {
     @Id
     @GeneratedValue
@@ -12,40 +21,7 @@ public class Author {
     @Column(name = "author_name")
     private String authorName;
 
-    @OneToMany(mappedBy = "author")
-    private Book book;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-
-    public Author() {
-    }
-
-    public Author(Long id, String authorName, Book book) {
-        this.id = id;
-        this.authorName = authorName;
-        this.book = book;
-    }
-
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", authorName='" + authorName + '\'' +
-                ", book=" + book +
-                '}';
-    }
+    @OneToMany(targetEntity = Book.class,cascade = CascadeType.ALL)
+    @JoinColumn(name="ab_fk", referencedColumnName = "id")
+    private Set<Book> books = new HashSet<>();
 }
