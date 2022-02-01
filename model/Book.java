@@ -32,7 +32,7 @@ public class Book {
     private String genres;
 
     @Column(name="quantity")
-    private final int quantity = 1;
+    private int quantity = 1;
 
 
     @ManyToMany()

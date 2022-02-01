@@ -39,12 +39,22 @@ public class BooksController {
     }
 
     @PutMapping("/update-book/{id}")
-    public void updateAuthor(@PathVariable(value="id") Long id, @Validated @RequestBody Book book){
+    public void updateBook(@PathVariable(value="id") Long id, @Validated @RequestBody Book book){
         Optional<Book> bookById = booksService.findBookById(id);
         booksService.updateBook(book);
     }
-    @DeleteMapping("/remove-author/{id}")
-    public void deleteAuthor(@PathVariable(value = "id") Long id){
+    @DeleteMapping("/remove-book/{id}")
+    public void deleteBook(@PathVariable(value = "id") Long id){
         booksService.deleteBook(id);
+    }
+
+    @PutMapping("/return-book/{id}")
+    public String returnBook(@PathVariable(value="id") Long id){
+       return booksService.updateReturnedBookQuantity(id);
+    }
+
+    @PutMapping("/rented-book/{id}")
+    public String rentedBook(@PathVariable(value="id") Long id){
+        return booksService.updateRentedBookQuantity(id);
     }
 }

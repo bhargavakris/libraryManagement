@@ -16,4 +16,8 @@ public interface BooksService {
     public void updateBook(Book book);
 
     public void deleteBook(Long id);
+
+    public String updateReturnedBookQuantity(Long id);
+
+    public String updateRentedBookQuantity(long id);
 }
