@@ -29,7 +29,10 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public String updateRentedBooks(long id, int number) {
         Optional<UserDetails> userDetails = userDetailsRepository.findById(id);
-        if(userDetails.get().getBooksLoaned()!=0){
+        if(number >3 ){
+            return "you cannot rent more than "+number+ " books";
+        }
+        else if(userDetails.get().getBooksLoaned()!=0){
             return "You cannot loan books at the moment as you have not " +
                     "returned "+userDetails.get().getBooksLoaned()+" books you have taken last time";
         }else{

@@ -14,14 +14,15 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Author {
+
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     @Column(name = "author_name")
     private String authorName;
 
     @OneToMany(targetEntity = Book.class,cascade = CascadeType.ALL)
-    @JoinColumn(name="ab_fk", referencedColumnName = "id")
+    @JoinColumn(name="fk_author_book", referencedColumnName = "id")
     private Set<Book> books = new HashSet<>();
 }

@@ -17,7 +17,7 @@ public class Genre {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     @Column(name = "genre_name")
     private String genreName;
