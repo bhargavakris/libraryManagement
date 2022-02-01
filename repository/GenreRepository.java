@@ -1,4 +1,4 @@
-package com.Bhargav.libraryManagement.model;
+package com.Bhargav.libraryManagement.repository;
 
 import com.Bhargav.libraryManagement.model.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;

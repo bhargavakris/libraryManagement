@@ -31,6 +31,9 @@ public class Book {
     @Column(name="genres")
     private String genres;
 
+    @Column(name="quantity")
+    private final int quantity = 1;
+
 
     @ManyToMany()
     @JoinTable(name = "Book_genre",
