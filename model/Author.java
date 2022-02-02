@@ -22,7 +22,7 @@ public class Author {
     @Column(name = "author_name")
     private String authorName;
 
-    @OneToMany(targetEntity = Book.class,cascade = CascadeType.ALL)
-    @JoinColumn(name="fk_author_book", referencedColumnName = "id")
+    @OneToMany(targetEntity = Book.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_author_book", referencedColumnName = "id")
     private Set<Book> books = new HashSet<>();
 }

@@ -32,13 +32,13 @@ public class GenreServiceImpl implements GenreService {
         return ResponseEntity.accepted().body(genre);
     }
 
-    public ResponseEntity<Genre> updateGenre(Long id,Genre genre) {
+    public ResponseEntity<Genre> updateGenre(Long id, Genre genre) {
         Optional<Genre> genreById = Optional.ofNullable(genreRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Author not found with ID %d", id))));
-        if(genreById.isPresent()) {
+        if (genreById.isPresent()) {
             genreRepository.save(genre);
             return ResponseEntity.accepted().body(genre);
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -46,10 +46,10 @@ public class GenreServiceImpl implements GenreService {
     public ResponseEntity<String> deleteGenre(Long id) {
         Optional<Genre> genreById = Optional.ofNullable(genreRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Author not found with ID %d", id))));
-        if(genreById.isPresent()) {
+        if (genreById.isPresent()) {
             genreRepository.deleteById(id);
-            return ResponseEntity.ok("Deleted the Genre with Id: "+id+" successfully");
-        }else{
+            return ResponseEntity.ok("Deleted the Genre with Id: " + id + " successfully");
+        } else {
             return ResponseEntity.notFound().build();
         }
     }

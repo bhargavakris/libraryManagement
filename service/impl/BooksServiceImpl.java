@@ -7,13 +7,14 @@ import com.Bhargav.libraryManagement.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BooksServiceImpl implements BooksService {
 
-    private final int zero=0;
+    private final int zero = 0;
     @Autowired
     private BookRepository bookRepository;
 
@@ -35,10 +36,10 @@ public class BooksServiceImpl implements BooksService {
     public ResponseEntity<Book> updateBook(Long id, Book book) {
         Optional<Book> bookById = Optional.ofNullable(bookRepository.findById(id))
                 .orElseThrow(() -> new NotFoundException(String.format("Author not found with ID %d", id)));
-        if(bookById.isPresent()) {
+        if (bookById.isPresent()) {
             bookRepository.save(book);
             return ResponseEntity.ok().body(book);
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -46,10 +47,10 @@ public class BooksServiceImpl implements BooksService {
     public ResponseEntity<String> deleteBook(Long id) {
         Optional<Book> book = Optional.ofNullable(bookRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Book not found with ID %d", id))));
-        if(book.isPresent()) {
+        if (book.isPresent()) {
             bookRepository.deleteById(id);
-            return ResponseEntity.ok("Deleted the book with Id: "+id +" Successfully");
-        }else{
+            return ResponseEntity.ok("Deleted the book with Id: " + id + " Successfully");
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -68,9 +69,9 @@ public class BooksServiceImpl implements BooksService {
     public List<String> updateRentedBookQuantity(List<Long> bookIds) {
         List<String> returnValue = null;
 
-        if(bookIds.size() > 3){
+        if (bookIds.size() > 3) {
             returnValue.add("You cannot take more than 3 books ata time");
-        }else {
+        } else {
             for (Long bookId : bookIds) {
                 Optional<Book> book = Optional.ofNullable(bookRepository.findById(bookId)
                         .orElseThrow(() -> new NotFoundException(String.format("Book not found with ID %d", bookId))));

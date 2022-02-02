@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Table(name="book")
+@Table(name = "book")
 @Entity
 @Getter
 @Setter
@@ -19,19 +19,19 @@ public class Book {
     @GeneratedValue
     private long id;
 
-    @Column(name="title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
 
-    @Column(name="author_name")
+    @Column(name = "author_name")
     private String authorName;
 
-    @Column(name="genres")
+    @Column(name = "genres")
     private String genres;
 
-    @Column(name="quantity")
+    @Column(name = "quantity")
     private int quantity = 1;
 
 

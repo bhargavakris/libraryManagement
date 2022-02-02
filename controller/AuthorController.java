@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -17,12 +18,13 @@ public class AuthorController {
 
 
     @GetMapping("/authors")
-    public List<Author> findAllAuthors(){
+    public List<Author> findAllAuthors() {
         return authorService.findAllAuthors();
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Author> findAuthorById(@PathVariable(value = "id") long id) {
-       return authorService.findAuthorById(id);
+        return authorService.findAuthorById(id);
     }
 
     @PostMapping("/add-author")
@@ -31,11 +33,12 @@ public class AuthorController {
     }
 
     @PutMapping("/update-author/{id}")
-    public ResponseEntity<Author> updateAuthor(@PathVariable(value="id") Long id, @Validated @RequestBody Author author){
-        return authorService.updateAuthor(id,author);
+    public ResponseEntity<Author> updateAuthor(@PathVariable(value = "id") Long id, @Validated @RequestBody Author author) {
+        return authorService.updateAuthor(id, author);
     }
+
     @DeleteMapping("/remove-author/{id}")
-    public ResponseEntity<String> deleteAuthor(@PathVariable(value = "id") Long id){
-          return  authorService.deleteAuthor(id);
+    public ResponseEntity<String> deleteAuthor(@PathVariable(value = "id") Long id) {
+        return authorService.deleteAuthor(id);
     }
 }
