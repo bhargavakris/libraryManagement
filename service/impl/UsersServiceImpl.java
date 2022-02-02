@@ -1,5 +1,6 @@
 package com.Bhargav.libraryManagement.service.impl;
 
+import com.Bhargav.libraryManagement.exception.NotFoundException;
 import com.Bhargav.libraryManagement.model.UserDetails;
 import com.Bhargav.libraryManagement.repository.UserDetailsRepository;
 import com.Bhargav.libraryManagement.service.UsersService;
@@ -16,22 +17,25 @@ public class UsersServiceImpl implements UsersService {
     UserDetailsRepository userDetailsRepository;
     @Override
     public int findUserLoanedBooks(Long id) {
-        Optional<UserDetails> userDetails = userDetailsRepository.findById(id);
-        return userDetails.get().getBooksLoaned();
+        Optional<UserDetails> userDetails = Optional.ofNullable(userDetailsRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", id))));
+        return userDetails.map(UserDetails::getBooksLoaned).orElse(0);
     }
 
     @Override
     public String updateBooksLoaned(Long id,List<Long> bookIds) {
 
-        Optional<UserDetails> userDetails = userDetailsRepository.findById(id);
-        userDetails.get().setBooksLoaned(userDetails.get().getBooksLoaned()-bookIds.size());
+        Optional<UserDetails> userDetails = Optional.ofNullable(userDetailsRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", id))));
+        userDetails.ifPresent(details -> details.setBooksLoaned(details.getBooksLoaned() - bookIds.size()));
         userDetailsRepository.save(userDetails.get());
         return "you have returned "+bookIds.size() +" book";
     }
 
     @Override
     public String updateRentedBooks(Long id, List<Long> bookIds) {
-        Optional<UserDetails> userDetails = userDetailsRepository.findById(id);
+        Optional<UserDetails> userDetails = Optional.ofNullable(userDetailsRepository.findById(id)
+                        .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", id))));
         if(bookIds.size() >3 ){
             return "you cannot rent more than "+bookIds.size()+ " books";
         }
@@ -39,7 +43,7 @@ public class UsersServiceImpl implements UsersService {
             return "You cannot loan books at the moment as you have not " +
                     "returned "+userDetails.get().getBooksLoaned()+" books you have taken last time";
         }else{
-            userDetails.get().setBooksLoaned(bookIds.size());
+            userDetails.ifPresent(details -> details.setBooksLoaned(bookIds.size()));
             userDetailsRepository.save(userDetails.get());
             return "you have rented "+userDetails.get().getBooksLoaned()+" books";
         }
