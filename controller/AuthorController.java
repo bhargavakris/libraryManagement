@@ -3,11 +3,10 @@ package com.Bhargav.libraryManagement.controller;
 import com.Bhargav.libraryManagement.model.Author;
 import com.Bhargav.libraryManagement.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/author")
@@ -22,21 +21,21 @@ public class AuthorController {
         return authorService.findAllAuthors();
     }
     @GetMapping("/{id}")
-    public Optional<Author> findAuthorById(@PathVariable(value = "id") long id) {
+    public ResponseEntity<Author> findAuthorById(@PathVariable(value = "id") long id) {
        return authorService.findAuthorById(id);
     }
 
     @PostMapping("/add-author")
-    public void saveAuthor(@Validated @RequestBody Author author) {
-         authorService.createAuthor(author);
+    public ResponseEntity<Author> saveAuthor(@Validated @RequestBody Author author) {
+        return authorService.createAuthor(author);
     }
+
     @PutMapping("/update-author/{id}")
-    public void updateAuthor(@PathVariable(value="id") Long id, @Validated @RequestBody Author author){
-        Optional<Author> authorById = authorService.findAuthorById(id);
-        authorService.updateAuthor(author);
+    public ResponseEntity<Author> updateAuthor(@PathVariable(value="id") Long id, @Validated @RequestBody Author author){
+        return authorService.updateAuthor(author);
     }
     @DeleteMapping("/remove-author/{id}")
-    public void deleteAuthor(@PathVariable(value = "id") Long id){
-        authorService.deleteAuthor(id);
+    public ResponseEntity<String> deleteAuthor(@PathVariable(value = "id") Long id){
+          return  authorService.deleteAuthor(id);
     }
 }

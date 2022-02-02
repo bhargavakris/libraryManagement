@@ -1,6 +1,7 @@
 package com.Bhargav.libraryManagement.service;
 
 import com.Bhargav.libraryManagement.model.Genre;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,11 +12,11 @@ public interface GenreService {
 
     public List<Genre> findAllGenres();
 
-    public Optional<Genre> findGenreById(Long id);
+    public ResponseEntity<Genre> findGenreById(Long id);
 
-    public void createGenre(Genre genre);
+    public ResponseEntity<Genre> createGenre(Genre genre);
 
-    public void updateGenre(Genre genre);
+    public ResponseEntity<Genre> updateGenre(Long id, Genre genre);
 
-    public void deleteGenre(Long id);
+    public ResponseEntity<String> deleteGenre(Long id);
 }

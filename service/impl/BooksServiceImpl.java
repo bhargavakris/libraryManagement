@@ -6,8 +6,6 @@ import com.Bhargav.libraryManagement.repository.BookRepository;
 import com.Bhargav.libraryManagement.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +34,7 @@ public class BooksServiceImpl implements BooksService {
 
     public void deleteBook(Long id) {
         Optional<Book> book = Optional.ofNullable(bookRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Book not found with ID %d", id))));;
+                .orElseThrow(() -> new NotFoundException(String.format("Book not found with ID %d", id))));
         bookRepository.deleteById(book.get().getId());
     }
 
@@ -44,7 +42,7 @@ public class BooksServiceImpl implements BooksService {
         for (Long id : bookIds) {
             Optional<Book> book = Optional.ofNullable(bookRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException(String.format("Book not found with ID %d", id))));
-            if (book.get().getQuantity() == 0) {
+            if (book.get().getQuantity() == zero) {
                 book.get().setQuantity(1);
             }
         }
@@ -52,18 +50,19 @@ public class BooksServiceImpl implements BooksService {
     }
 
     public List<String> updateRentedBookQuantity(List<Long> bookIds) {
-        List<String> returnValue= Collections.singletonList("");
+        List<String> returnValue = null;
+
         if(bookIds.size() > 3){
             returnValue.add("You cannot take more than 3 books ata time");
         }else {
-            for (Long id : bookIds) {
-                Optional<Book> book = Optional.ofNullable(bookRepository.findById(id)
-                        .orElseThrow(() -> new NotFoundException(String.format("Book not found with ID %d", id))));
+            for (Long bookId : bookIds) {
+                Optional<Book> book = Optional.ofNullable(bookRepository.findById(bookId)
+                        .orElseThrow(() -> new NotFoundException(String.format("Book not found with ID %d", bookId))));
                 if (book.get().getQuantity() == zero) {
-                    returnValue.add(String.format("The book with ID %d is not available at the moment come back after sometime", id));
+                    returnValue.add(String.format("The book with ID %d is not available at the moment come back after sometime", bookId));
                 } else {
                     book.get().setQuantity(zero);
-                    returnValue.add(String.format("The book with ID %d has been rented successfully", id));
+                    returnValue.add(String.format("The book with ID %d has been rented successfully", bookId));
                 }
             }
         }

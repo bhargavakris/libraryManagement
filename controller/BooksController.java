@@ -19,7 +19,6 @@ public class BooksController {
 
     @GetMapping
     public List<Book> findAllBooks(){
-
         return booksService.findAllBooks();
     }
     @GetMapping("book/{id}")
@@ -34,18 +33,22 @@ public class BooksController {
     }
 
     @PostMapping("/add-book")
-    public void saveBook(@Validated @RequestBody Book book) {
+    public ResponseEntity<Book> saveBook(@Validated @RequestBody Book book) {
+
         booksService.createBook(book);
+        return ResponseEntity.accepted().body(book);
     }
 
     @PutMapping("/update-book/{id}")
-    public void updateBook(@PathVariable(value="id") Long id, @Validated @RequestBody Book book){
+    public ResponseEntity<Book> updateBook(@PathVariable(value="id") Long id, @Validated @RequestBody Book book){
         Optional<Book> bookById = booksService.findBookById(id);
         booksService.updateBook(book);
+        return ResponseEntity.accepted().body(book);
     }
     @DeleteMapping("/remove-book/{id}")
-    public void deleteBook(@PathVariable(value = "id") Long id){
+    public ResponseEntity<String> deleteBook(@PathVariable(value = "id") Long id){
         booksService.deleteBook(id);
+        return ResponseEntity.ok("Delete the book with Id: "+id+ " successfully");
     }
 
 }
