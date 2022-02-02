@@ -23,13 +23,14 @@ public class UserController {
 
     @PutMapping("/return-books/{id}")
     public String returnedBooks(@PathVariable(value="id") Long id,@RequestParam List<Long> bookIds){
-        booksService.updateReturnedBookQuantity(bookIds);
-        return usersService.updateBooksLoaned(id,bookIds)+ " and you need to return "
+
+        return booksService.updateReturnedBookQuantity(bookIds) + usersService.updateBooksLoaned(id,bookIds)+
+                " and you need to return "
                 +usersService.findUserLoanedBooks(id)+" book";
     }
     @PutMapping("/rent-books/{id}")
     public String rentBooks(@PathVariable(value="id") Long id, @RequestParam List<Long> bookIds){
-        booksService.updateRentedBookQuantity(bookIds);
-        return usersService.updateRentedBooks(id,bookIds);
+
+        return booksService.updateRentedBookQuantity(bookIds) +usersService.updateRentedBooks(id,bookIds);
     }
 }

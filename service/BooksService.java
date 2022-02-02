@@ -19,5 +19,5 @@ public interface BooksService {
 
     public String updateReturnedBookQuantity(List<Long> id);
 
-    public String updateRentedBookQuantity(List<Long> id);
+    public List<String> updateRentedBookQuantity(List<Long> id);
 }
