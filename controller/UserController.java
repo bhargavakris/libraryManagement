@@ -5,8 +5,10 @@ import com.Bhargav.libraryManagement.model.UserDetails;
 import com.Bhargav.libraryManagement.service.BooksService;
 import com.Bhargav.libraryManagement.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -17,11 +19,11 @@ public class UserController {
     private BooksService booksService;
 
     @GetMapping("/{id}")
-    public UserDetails findUserById(@PathVariable(value = "id") long id) {
+    public ResponseEntity<UserDetails> findUserById(@PathVariable(value = "id") long id) {
         return usersService.findUserById(id);
     }
     @GetMapping("/user-loaned-books/{id}")
-    public Book userLoanedBooks(@PathVariable(value="id") Long id ){
+    public ResponseEntity<Set<Book>> userLoanedBooks(@PathVariable(value="id") Long id ){
         return usersService.findUserLoanedBooks(id);
     }
 

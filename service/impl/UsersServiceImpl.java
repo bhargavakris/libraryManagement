@@ -5,10 +5,10 @@ import com.Bhargav.libraryManagement.model.Book;
 import com.Bhargav.libraryManagement.model.UserDetails;
 import com.Bhargav.libraryManagement.repository.BookRepository;
 import com.Bhargav.libraryManagement.repository.UserDetailsRepository;
-import com.Bhargav.libraryManagement.service.BooksService;
 import com.Bhargav.libraryManagement.service.UsersService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,17 +24,27 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     BookRepository bookRepository;
     @Override
-    public Book findUserLoanedBooks(Long id) {
+    public ResponseEntity<Set<Book>> findUserLoanedBooks(Long id) {
         Optional<UserDetails> userDetails = Optional.ofNullable(userDetailsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", id))));
-        return (Book) userDetails.get().getBooks();
+        if(userDetails.isPresent()){
+            return ResponseEntity.ok().body(userDetails.get().getBooks());
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override
-    public UserDetails findUserById(Long id) {
+    public ResponseEntity<UserDetails> findUserById(Long id) {
         Optional<UserDetails> userDetails = Optional.ofNullable(userDetailsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", id))));
-        return userDetails.get();
+        if(userDetails.isPresent()){
+            return ResponseEntity.ok().body(userDetails.get());
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override

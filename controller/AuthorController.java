@@ -32,7 +32,7 @@ public class AuthorController {
 
     @PutMapping("/update-author/{id}")
     public ResponseEntity<Author> updateAuthor(@PathVariable(value="id") Long id, @Validated @RequestBody Author author){
-        return authorService.updateAuthor(author);
+        return authorService.updateAuthor(id,author);
     }
     @DeleteMapping("/remove-author/{id}")
     public ResponseEntity<String> deleteAuthor(@PathVariable(value = "id") Long id){

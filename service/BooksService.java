@@ -1,6 +1,7 @@
 package com.Bhargav.libraryManagement.service;
 
 import com.Bhargav.libraryManagement.model.Book;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,13 +10,13 @@ public interface BooksService {
 
     public List<Book> findAllBooks();
 
-    public Optional<Book> findBookById(Long id);
+    public ResponseEntity<Book> findBookById(Long id);
 
-    public void createBook(Book book);
+    public ResponseEntity<Book> createBook(Book book);
 
-    public void updateBook(Book book);
+    public ResponseEntity<Book> updateBook(Long id,Book book);
 
-    public void deleteBook(Long id);
+    public ResponseEntity<String> deleteBook(Long id);
 
     public String updateReturnedBookQuantity(List<Long> id);
 

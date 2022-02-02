@@ -36,9 +36,9 @@ public class AuthorServiceImpl implements AuthorService {
         return ResponseEntity.accepted().body(author);
     }
 
-    public ResponseEntity<Author> updateAuthor(Author author) {
-        Optional<Author> authorById = Optional.ofNullable(authorRepository.findById(author.getId()))
-                .orElseThrow(() -> new NotFoundException(String.format("Author not found with ID %d", author.getId())));
+    public ResponseEntity<Author> updateAuthor(Long id,Author author) {
+        Optional<Author> authorById = Optional.ofNullable(authorRepository.findById(id))
+                .orElseThrow(() -> new NotFoundException(String.format("Author not found with ID %d", id)));
         if(authorById.isPresent()) {
             authorRepository.save(author);
             return ResponseEntity.ok().body(authorById.get());

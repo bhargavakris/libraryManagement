@@ -11,6 +11,6 @@ public interface AuthorService {
     public List<Author> findAllAuthors();
     public ResponseEntity<Author> findAuthorById(Long id);
     public ResponseEntity<Author> createAuthor(Author author);
-    public ResponseEntity<Author> updateAuthor(Author author);
+    public ResponseEntity<Author> updateAuthor(Long id,Author author);
     public ResponseEntity<String> deleteAuthor(Long id);
 }

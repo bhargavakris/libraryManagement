@@ -1,7 +1,6 @@
 package com.Bhargav.libraryManagement.service.impl;
 
 import com.Bhargav.libraryManagement.exception.NotFoundException;
-import com.Bhargav.libraryManagement.model.Author;
 import com.Bhargav.libraryManagement.model.Genre;
 import com.Bhargav.libraryManagement.repository.GenreRepository;
 import com.Bhargav.libraryManagement.service.GenreService;
@@ -25,11 +24,7 @@ public class GenreServiceImpl implements GenreService {
     public ResponseEntity<Genre> findGenreById(Long id) {
         Optional<Genre> genre = Optional.ofNullable(genreRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Author not found with ID %d", id))));
-        if(genre.isPresent()) {
-            return ResponseEntity.ok().body(genre.get());
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        return genre.map(value -> ResponseEntity.ok().body(value)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     public ResponseEntity<Genre> createGenre(Genre genre) {
@@ -55,7 +50,7 @@ public class GenreServiceImpl implements GenreService {
             genreRepository.deleteById(id);
             return ResponseEntity.ok("Deleted the Genre with Id: "+id+" successfully");
         }else{
-            return (ResponseEntity<String>) ResponseEntity.notFound();
+            return ResponseEntity.notFound().build();
         }
     }
 }

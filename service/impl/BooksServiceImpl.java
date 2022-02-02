@@ -5,6 +5,7 @@ import com.Bhargav.libraryManagement.model.Book;
 import com.Bhargav.libraryManagement.repository.BookRepository;
 import com.Bhargav.libraryManagement.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -20,22 +21,37 @@ public class BooksServiceImpl implements BooksService {
         return bookRepository.findAll();
     }
 
-    public Optional<Book> findBookById(Long id) {
-        return bookRepository.findById(id);
+    public ResponseEntity<Book> findBookById(Long id) {
+        Optional<Book> book = Optional.ofNullable(bookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Author not found with ID %d", id))));
+        return book.map(value -> ResponseEntity.ok().body(value)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    public void createBook(Book book) {
+    public ResponseEntity<Book> createBook(Book book) {
         bookRepository.save(book);
+        return ResponseEntity.accepted().body(book);
     }
 
-    public void updateBook(Book book) {
-        bookRepository.save(book);
+    public ResponseEntity<Book> updateBook(Long id, Book book) {
+        Optional<Book> bookById = Optional.ofNullable(bookRepository.findById(id))
+                .orElseThrow(() -> new NotFoundException(String.format("Author not found with ID %d", id)));
+        if(bookById.isPresent()) {
+            bookRepository.save(book);
+            return ResponseEntity.ok().body(book);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    public void deleteBook(Long id) {
+    public ResponseEntity<String> deleteBook(Long id) {
         Optional<Book> book = Optional.ofNullable(bookRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Book not found with ID %d", id))));
-        bookRepository.deleteById(book.get().getId());
+        if(book.isPresent()) {
+            bookRepository.deleteById(id);
+            return ResponseEntity.ok("Deleted the book with Id: "+id +" Successfully");
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     public String updateReturnedBookQuantity(List<Long> bookIds) {
