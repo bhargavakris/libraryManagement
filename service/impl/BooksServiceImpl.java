@@ -53,14 +53,18 @@ public class BooksServiceImpl implements BooksService {
 
     public List<String> updateRentedBookQuantity(List<Long> bookIds) {
         List<String> returnValue= Collections.singletonList("");
-        for (Long id : bookIds) {
-            Optional<Book> book = Optional.ofNullable(bookRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException(String.format("Book not found with ID %d", id))));
-            if (book.get().getQuantity() == zero) {
-                returnValue.add( String.format("The book with ID %d is not available at the moment come back after sometime",id));
-            } else {
-                book.get().setQuantity(zero);
-                returnValue.add( String.format("The book with ID %d has been rented successfully", id));
+        if(bookIds.size() > 3){
+            returnValue.add("You cannot take more than 3 books ata time");
+        }else {
+            for (Long id : bookIds) {
+                Optional<Book> book = Optional.ofNullable(bookRepository.findById(id)
+                        .orElseThrow(() -> new NotFoundException(String.format("Book not found with ID %d", id))));
+                if (book.get().getQuantity() == zero) {
+                    returnValue.add(String.format("The book with ID %d is not available at the moment come back after sometime", id));
+                } else {
+                    book.get().setQuantity(zero);
+                    returnValue.add(String.format("The book with ID %d has been rented successfully", id));
+                }
             }
         }
         return returnValue;
