@@ -48,13 +48,4 @@ public class BooksController {
         booksService.deleteBook(id);
     }
 
-    @PutMapping("/return-book/{id}")
-    public String returnBook(@PathVariable(value="id") Long id){
-       return booksService.updateReturnedBookQuantity(id);
-    }
-
-    @PutMapping("/rented-book/{id}")
-    public String rentedBook(@PathVariable(value="id") Long id){
-        return booksService.updateRentedBookQuantity(id);
-    }
 }

@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDetails {
+
         @Id
         @GeneratedValue
         private long id;
@@ -29,5 +30,6 @@ public class UserDetails {
         @OneToMany(targetEntity = Book.class,cascade = CascadeType.ALL)
         @JoinColumn(name="fk_user_book", referencedColumnName = "id")
         private Set<Book> books = new HashSet<>();
+
     }
 

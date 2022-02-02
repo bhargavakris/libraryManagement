@@ -37,24 +37,26 @@ public class BooksServiceImpl implements BooksService {
         bookRepository.deleteById(book.get().getId());
     }
 
-    public String updateReturnedBookQuantity(Long id){
-        Optional<Book> book = bookRepository.findById(id);
-        if(book.get().getQuantity()==0){
-            book.get().setQuantity(1);
-            return "Book has been returned";
-        }else{
-            return "This book doesn't belong to the library";
+    public String updateReturnedBookQuantity(List<Long> bookIds) {
+        for (Long id : bookIds) {
+            Optional<Book> book = bookRepository.findById(id);
+            if (book.get().getQuantity() == 0) {
+                book.get().setQuantity(1);
+            }
         }
-        }
+        return "You have returned all the books";
+    }
 
-    @Override
-    public String updateRentedBookQuantity(long id) {
-        Optional<Book> book = bookRepository.findById(id);
-        if(book.get().getQuantity()==zero){
-            return "The book is not available at the moment come back after sometime";
-        }else{
-            book.get().setQuantity(zero);
-            return "the book has been returned successfully";
+    public String updateRentedBookQuantity(List<Long> bookIds) {
+        for (Long id : bookIds) {
+            Optional<Book> book = bookRepository.findById(id);
+            if (book.get().getQuantity() == zero) {
+                return "The book is not available at the moment come back after sometime";
+            } else {
+                book.get().setQuantity(zero);
+                return "the book has been returned successfully";
+            }
         }
+        return null;
     }
 }
