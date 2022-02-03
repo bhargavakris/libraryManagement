@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -68,7 +65,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public ResponseEntity<String> updateRentedBooks(Long id, List<Long> bookIds) {
-
+        Set<Book> books = new HashSet<>();
         Optional<UserDetails> userDetails = Optional.ofNullable(userDetailsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", id))));
         if (bookIds.size() > 3) {
@@ -81,8 +78,12 @@ public class UsersServiceImpl implements UsersService {
                 for (Long bookId : bookIds) {
                     Optional<Book> book = Optional.ofNullable(bookRepository.findById(bookId)
                             .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", bookId))));
-                    userDetails.get().setBooks((Set<Book>) book.get());
+                    if(book.isPresent() && book.get().getQuantity()==0){
+                        return ResponseEntity.ok("The book with Book Id: "+bookId+" is not available at the moment");
+                    }
+                    books.add(book.get());
                 }
+                userDetails.get().setBooks(books);
                 userDetails.ifPresent(details -> details.setBooksLoaned(bookIds.size()));
                 userDetailsRepository.save(userDetails.get());
                 return ResponseEntity.ok("you have rented " + userDetails.get().getBooksLoaned() + " books");
