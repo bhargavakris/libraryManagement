@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author Bhargava Krishna Dommaraju Venkata
+ */
 @Service
 public interface GenreService {
 

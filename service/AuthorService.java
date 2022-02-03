@@ -5,16 +5,18 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-
+/**
+ * @author Bhargava Krishna Dommaraju Venkata
+ */
 public interface AuthorService {
 
-     List<Author> findAllAuthors();
+    List<Author> findAllAuthors();
 
-     ResponseEntity<Author> findAuthorById(Long id);
+    ResponseEntity<Author> findAuthorById(Long id);
 
-     ResponseEntity<Author> createAuthor(Author author);
+    ResponseEntity<Author> createAuthor(Author author);
 
-     ResponseEntity<Author> updateAuthor(Long id, Author author);
+    ResponseEntity<Author> updateAuthor(Long id, Author author);
 
-     ResponseEntity<String> deleteAuthor(Long id);
+    ResponseEntity<String> deleteAuthor(Long id);
 }

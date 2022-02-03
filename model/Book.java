@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Book Details
+ *
+ * @author Bhargava Krishna Dommaraju Venkata
+ */
 @Table(name = "book")
 @Entity
 @Getter

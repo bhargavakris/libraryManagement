@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+/**
+ * API'S to find, create,update and delete Genre details
+ *
+ * @author Bhargava Krishna Dommaraju Venkata
+ */
 @RestController
 @RequestMapping("/genre")
 public class GenreController {

@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * API'S to find loaned book details, returned and to rent book details
+ *
+ * @author Bhargava Krishna Dommaraju Venkata
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {

@@ -7,14 +7,17 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Bhargava Krishna Dommaraju Venkata
+ */
 public interface UsersService {
 
-     ResponseEntity<Set<Book>> findUserLoanedBooks(Long id);
+    ResponseEntity<Set<Book>> findUserLoanedBooks(Long id);
 
-     ResponseEntity<UserDetails> findUserById(Long id);
+    ResponseEntity<UserDetails> findUserById(Long id);
 
-     ResponseEntity<String> updateBooksReturned(Long id, List<Long> bookIds);
+    ResponseEntity<String> updateBooksReturned(Long id, List<Long> bookIds);
 
-     ResponseEntity<String> updateRentedBooks(Long id, List<Long> bookIds);
+    ResponseEntity<String> updateRentedBooks(Long id, List<Long> bookIds);
 
 }

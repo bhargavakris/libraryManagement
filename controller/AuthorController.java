@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * API'S to find, create,update and delete author details
+ *
+ * @author Bhargava Krishna Dommaraju Venkata
+ */
 @RestController
 @RequestMapping("/author")
 public class AuthorController {
