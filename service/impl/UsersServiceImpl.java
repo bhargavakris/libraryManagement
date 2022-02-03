@@ -56,7 +56,7 @@ public class UsersServiceImpl implements UsersService {
                if(book.isPresent() && books.contains(book.get())){
                    books.remove(book.get());
                }else{
-                   return ResponseEntity.ok("The book with book Id: "+bookId+"is not rented you");
+                   return ResponseEntity.ok("The book with book Id: "+bookId+" is not rented by the user");
                }
             }
             userDetails.get().setBooks(books);
