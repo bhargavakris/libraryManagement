@@ -6,7 +6,6 @@ import com.Bhargav.libraryManagement.model.UserDetails;
 import com.Bhargav.libraryManagement.repository.BookRepository;
 import com.Bhargav.libraryManagement.repository.UserDetailsRepository;
 import com.Bhargav.libraryManagement.service.UsersService;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -53,11 +52,11 @@ public class UsersServiceImpl implements UsersService {
             for (Long bookId : bookIds) {
                 Optional<Book> book = Optional.ofNullable(bookRepository.findById(bookId)
                         .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", bookId))));
-               if(book.isPresent() && books.contains(book.get())){
-                   books.remove(book.get());
-               }else{
-                   return ResponseEntity.ok("The book with book Id: "+bookId+" is not rented by the user");
-               }
+                if (book.isPresent() && books.contains(book.get())) {
+                    books.remove(book.get());
+                } else {
+                    return ResponseEntity.ok("The book with book Id: " + bookId + " is not rented by the user");
+                }
             }
             userDetails.get().setBooks(books);
             userDetails.ifPresent(details -> details.setBooksLoaned(details.getBooksLoaned() - bookIds.size()));
@@ -83,9 +82,9 @@ public class UsersServiceImpl implements UsersService {
                 for (Long bookId : bookIds) {
                     Optional<Book> book = Optional.ofNullable(bookRepository.findById(bookId)
                             .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", bookId))));
-                    if(book.isPresent() && book.get().getQuantity()==0){
-                        return ResponseEntity.ok("The book with Book Id: "+bookId+" is not available at the moment");
-                    }else {
+                    if (book.isPresent() && book.get().getQuantity() == 0) {
+                        return ResponseEntity.ok("The book with Book Id: " + bookId + " is not available at the moment");
+                    } else {
                         books.add(book.get());
                     }
                 }
