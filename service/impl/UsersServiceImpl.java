@@ -49,12 +49,17 @@ public class UsersServiceImpl implements UsersService {
         Optional<UserDetails> userDetails = Optional.ofNullable(userDetailsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", id))));
         if (userDetails.isPresent()) {
+            Set<Book> books = userDetails.get().getBooks();
             for (Long bookId : bookIds) {
                 Optional<Book> book = Optional.ofNullable(bookRepository.findById(bookId)
                         .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", bookId))));
-                JSONObject json = new JSONObject((Map) userDetails.get());
-                json.remove(String.valueOf(book));
+               if(book.isPresent() && books.contains(book.get())){
+                   books.remove(book.get());
+               }else{
+                   return ResponseEntity.ok("The book with book Id: "+bookId+"is not rented you");
+               }
             }
+            userDetails.get().setBooks(books);
             userDetails.ifPresent(details -> details.setBooksLoaned(details.getBooksLoaned() - bookIds.size()));
             userDetailsRepository.save(userDetails.get());
             return ResponseEntity.ok("you have returned " + bookIds.size() + " book");
