@@ -80,8 +80,9 @@ public class UsersServiceImpl implements UsersService {
                             .orElseThrow(() -> new NotFoundException(String.format("User not found with ID %d", bookId))));
                     if(book.isPresent() && book.get().getQuantity()==0){
                         return ResponseEntity.ok("The book with Book Id: "+bookId+" is not available at the moment");
+                    }else {
+                        books.add(book.get());
                     }
-                    books.add(book.get());
                 }
                 userDetails.get().setBooks(books);
                 userDetails.ifPresent(details -> details.setBooksLoaned(bookIds.size()));
